@@ -42,6 +42,7 @@
             font-family: 'Arial', sans-serif;
             font-size: 56px;
             text-align: center; /* Wyśrodkowanie tekstu */
+            
         }
 
         nav ul {
@@ -68,6 +69,8 @@
             margin: 0;
             position: relative;
             text-align: center;
+
+            border-radius: 20px;
      
         }
 
@@ -224,7 +227,7 @@
         <section id="history">
             <div class="image-container">
                 <div>
-                    <img class="zoom-image" src="2 tyt koz.jpg" alt="Egzoplaneta Poltergeist" onclick="toggleZoom(this)">
+                    <img class="zoom-image" src="2 tyt koz.jpg" alt="Egzoplaneta Poltergeist" onclick="toggleZoom(this)"    >
                     <h2>PSR B1257+12 B (Poltergeist)</h2>
                     <p> - In 1992, a Polish astronomer discovered planets orbiting a pulsar by measuring irregularities
                      <p>     in the variations of brightness of variable stars. </p>
@@ -334,32 +337,34 @@
         </head>
         <body>
         
-            <section id="INTR">
-                <h2>That's interesting</h2>
-                <p>Try your skills, jump over obstacles as an astronaut!"</p>
-            
-                <button id="startGameButton">Start a game</button>
-                <div id="score">Score: 0</div> <!-- Wyświetlanie wyniku -->
-                <!-- Sekcja gry -->
-                <div id="gameCanvas">
-                    <div id="astronaut"></div>
-                </div>
-            
-                <!-- Komunikat o końcu gry -->
-                <div id="gameOverMessage" style="display: none;">
-                    <h3>Game Over!</h3>
-                    <p>Click the button to play again</p>
-                </div>
-            </section>
-            
-            <footer>
-                <p>© 2024 EXO-Haustive Planets</p>
-            </footer>
-            
-            <script>
-                let astronaut = document.getElementById('astronaut');
+           <section id="INTR">
+    <h2>That's interesting</h2>
+    <p>Try your skills, jump over obstacles as an astronaut!</p>
+
+    <button id="startGameButton">Start a game</button>
+    <div id="score">Score: 0</div> <!-- Wyświetlanie wyniku -->
+    <!-- Sekcja gry -->
+    <div id="gameCanvas">
+        <div id="astronaut"></div>
+    </div>
+
+    <!-- Komunikat o końcu gry -->
+    <div id="gameOverMessage" style="display: none;">
+        <h3>Game Over!</h3>
+        <p id="finalScoreMessage"></p> <!-- miejsce na wiadomość o wyniku -->
+        <p>Click the button to play again</p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2024 EXO-Haustive Planets</p>
+</footer>
+
+<script>
+    let astronaut = document.getElementById('astronaut');
     let gameCanvas = document.getElementById('gameCanvas');
     let gameOverMessage = document.getElementById('gameOverMessage');
+    let finalScoreMessage = document.getElementById('finalScoreMessage'); // Element do wyświetlania komunikatu
     let jumping = false;
     let gameStarted = false;
     let jumpHeight = 300;
@@ -369,43 +374,43 @@
     let score = 0; // Zmienna przechowująca wynik
     let scoreInterval;
     let scoreDisplay = document.getElementById('score');
-    
+
     // Funkcja uruchamiająca grę
     function startGame() {
         gameStarted = true;
         document.getElementById('startGameButton').style.display = 'none';
         gameOverMessage.style.display = 'none';
         astronaut.style.bottom = '0px';
-        clearObstacles(); 
+        clearObstacles();
         createObstacle();
         score = 0; // Resetowanie wyniku
         scoreDisplay.textContent = `Score: ${score}`; // Wyświetlanie wyniku
-        scoreInterval = setInterval(increaseScore, 1000); 
+        scoreInterval = setInterval(increaseScore, 1000);
     }
-    
+
     function increaseScore() {
-            score++;
-            scoreDisplay.textContent = `Score: ${score}`;
-        }
-    
+        score++;
+        scoreDisplay.textContent = `Score: ${score}`;
+    }
+
     // Skakanie astronauty po wciśnięciu klawisza "spacja"
-    document.addEventListener('keydown', function(event) {
+    document.addEventListener('keydown', function (event) {
         if (event.code === 'Space' && !jumping && gameStarted) {
             jump();
         }
     });
-    
+
     // Skakanie na urządzeniach mobilnych
-    astronaut.addEventListener('touchstart', function() {
+    astronaut.addEventListener('touchstart', function () {
         if (!jumping && gameStarted) {
             jump();
         }
     });
-    
+
     function jump() {
         jumping = true;
         let jumpProgress = 0;
-        let jumpInterval = setInterval(function() {
+        let jumpInterval = setInterval(function () {
             if (jumpProgress >= jumpHeight) {
                 clearInterval(jumpInterval);
                 fall();
@@ -415,9 +420,9 @@
             }
         }, 20);
     }
-    
+
     function fall() {
-        let fallInterval = setInterval(function() {
+        let fallInterval = setInterval(function () {
             let currentBottom = parseInt(astronaut.style.bottom);
             if (currentBottom <= 0) {
                 clearInterval(fallInterval);
@@ -428,16 +433,16 @@
             }
         }, 20);
     }
-    
+
     // Generowanie przeszkód
     function createObstacle() {
         if (!gameStarted) return;
-    
-        createObstacleTimeout = setTimeout(function() {
+
+        createObstacleTimeout = setTimeout(function () {
             // Losujemy, czy przeszkoda będzie naziemna, czy powietrzna
             let obstacle = document.createElement('div');
             let isAirObstacle = Math.random() < 0.5; // 50% szans na przeszkodę powietrzną
-    
+
             if (isAirObstacle) {
                 obstacle.classList.add('air-obstacle');
                 obstacle.style.bottom = `${Math.random() * 150 + 150}px`; // Przeszkody w powietrzu będą między 150px a 300px nad ziemią
@@ -445,23 +450,24 @@
                 obstacle.classList.add('obstacle');
                 obstacle.style.bottom = '0px'; // Naziemne przeszkody
             }
-    
+
             obstacle.style.right = '-50px';  // Przeszkoda zaczyna poza ekranem
             gameCanvas.appendChild(obstacle);
-    
+
             // Przemieszczanie przeszkody
-            let moveInterval = setInterval(function() {
+            let moveInterval = setInterval(function () {
                 let obstacleRight = parseInt(window.getComputedStyle(obstacle).right);
                 let astronautBottom = parseInt(window.getComputedStyle(astronaut).bottom);
                 let obstacleWidth = parseInt(window.getComputedStyle(obstacle).width);
                 let obstacleBottom = parseInt(window.getComputedStyle(obstacle).bottom);
-    
+
                 // Sprawdzenie kolizji
-                if (obstacleRight >= (gameCanvas.offsetWidth - obstacleWidth - 50) && obstacleRight <= (gameCanvas.offsetWidth - 50) && 
+                if (obstacleRight >= (gameCanvas.offsetWidth - obstacleWidth - 50) && obstacleRight <= (gameCanvas.offsetWidth - 50) &&
                     ((isAirObstacle && astronautBottom + 100 > obstacleBottom && astronautBottom < obstacleBottom + 50) ||  // Kolizja z powietrzną przeszkodą
-                    (!isAirObstacle && astronautBottom < 50))) {  // Kolizja z naziemną przeszkodą
+                        (!isAirObstacle && astronautBottom < 50))) {  // Kolizja z naziemną przeszkodą
                     gameOverMessage.style.display = 'block';
                     clearInterval(moveInterval);
+                    showFinalScoreMessage(); // Wywołanie funkcji do wyświetlenia wiadomości o wyniku
                     resetGame();
                 } else if (obstacleRight >= gameCanvas.offsetWidth) {
                     clearInterval(moveInterval);
@@ -470,21 +476,39 @@
                     obstacle.style.right = `${obstacleRight + 5}px`;
                 }
             }, 20);
-    
+
             moveIntervals.push(moveInterval);
-    
+
             if (gameStarted) {
                 createObstacle();
             }
         }, Math.random() * 1500 + 500); // Losowe generowanie przeszkód
     }
-    
+
     // Funkcja usuwająca wszystkie przeszkody
     function clearObstacles() {
         let obstacles = document.querySelectorAll('.obstacle, .air-obstacle');
         obstacles.forEach(obstacle => obstacle.remove());
     }
-    
+
+    // Funkcja do wyświetlania komunikatu o wyniku
+    function showFinalScoreMessage() {
+        let message;
+        if (score >= 1 && score <= 10) {
+            message = "Good Gamer!";
+        } else if (score >= 11 && score <= 20) {
+            message = "Very Good Gamer!";
+        } else {
+            message = "Excellent Gamer!";
+        }
+        finalScoreMessage.textContent = `Score: ${score} - ${message}`;
+
+        // Ukrycie wiadomości po 3 sekundach
+        setTimeout(() => {
+            gameOverMessage.style.display = 'none';
+        }, 3000); // 3000 ms = 3 sekundy
+    }
+
     // Funkcja resetowania gry po przegranej
     function resetGame() {
         jumping = false;
@@ -494,28 +518,12 @@
         moveIntervals.forEach(clearInterval);
         moveIntervals = [];
         clearObstacles();
-    
+
         document.getElementById('startGameButton').style.display = 'block';
     }
-    
+
     // Nasłuchiwanie kliknięcia na przycisk "Rozpocznij grę"
     document.getElementById('startGameButton').addEventListener('click', startGame);
-    
-            </script>    
-            </main>
-        
-            <footer>
-                <p>© 2024 EXO-Haustive Planets</p>
-            </footer>
-        
-            <script>
-                function toggleZoom(image) {
-                    if (image.style.transform === "scale(2.5)") {
-                        image.style.transform = "scale(1)";
-                    } else {
-                        image.style.transform = "scale(2.5)";
-                    }
-                }
-            </script>
+    </script>
         </body>
         </html>  

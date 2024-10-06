@@ -24,7 +24,7 @@
     }
     
     #score {
-        font-size: 18px; /* Mniejszy tekst na telefonie */
+        font-size: 15px; /* Mniejszy tekst na telefonie */
     }
 }
 
@@ -63,6 +63,7 @@
             padding: 70px; /* Mniejszy padding czyli jak ma za mało na dole */
             margin: 0;
             position: relative;
+            text-align: center;
      
         }
 
@@ -374,13 +375,13 @@
         clearObstacles(); 
         createObstacle();
         score = 0; // Resetowanie wyniku
-        scoreDisplay.textContent = `Wynik: ${score}`; // Wyświetlanie wyniku
+        scoreDisplay.textContent = `Score: ${score}`; // Wyświetlanie wyniku
         scoreInterval = setInterval(increaseScore, 1000); 
     }
     
     function increaseScore() {
             score++;
-            scoreDisplay.textContent = `Wynik: ${score}`;
+            scoreDisplay.textContent = `Score: ${score}`;
         }
     
     // Skakanie astronauty po wciśnięciu klawisza "spacja"
@@ -513,4 +514,4 @@
                 }
             </script>
         </body>
-        </html>   
+        </html>  

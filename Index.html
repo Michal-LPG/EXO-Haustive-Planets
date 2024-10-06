@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXO-Haustive Planets</title>
+    <link rel="stylesheet" href="style.css"> <!-- Łączenie z plikiem CSS -->
+    <style>
+        body {
+            margin: 0; /* Usunięcie marginesów dla body */
+        }
+
+        #home {
+            background-image: url('tło.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 200px; /* Mniejszy padding */
+            margin: 0; /* Usunięcie negatywnego marginesu */
+            font-family: 'Arial', sans-serif;
+            font-size: 56px;
+            text-align: center; /* Wyśrodkowanie tekstu */
+        }
+
+        nav ul {
+            list-style: none; /* Usunięcie kropek w liście */
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline-block; /* Wyświetlanie elementów listy w jednej linii */
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none; /* Usunięcie podkreślenia */
+            color: white;
+            font-size: 18px;
+        }
+
+        #history {
+            background-color: black;
+            color: white;
+            padding: 100px; /* Mniejszy padding czyli jak ma za mało na dole */
+            margin: 0;
+            position: relative;
+     
+        }
+
+        .image-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around; /* Rozmieszczenie elementów */
+            flex-wrap: wrap; /* Dodano, by obrazy się owijały */
+        }
+
+        .zoom-image {
+            width: 300px;
+            transition: transform 0.5s ease;
+            cursor: pointer;
+        }
+
+        .zoom-image:hover {
+            transform: scale(1.2); /* Dodano efekt hover */
+        }
+
+        .text-container {
+            max-width: 500px;
+            margin: 0 20px;
+            font-size: 1.2em;
+        }
+        #present {
+            background-color: black;   
+            color: white;
+            padding: 100px; /* Mniejszy padding czyli jak ma za mało na dole */
+            margin: 0;
+            position: relative;
+            text-align: center;
+        }
+        #future {
+            background-color: black;
+            color: white;
+            padding: 100px; /* Mniejszy padding czyli jak ma za mało na dole */
+            margin: 0;
+            position: relative;
+            text-align: center;
+        }
+        #INTR {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            margin: 0;
+            position: relative;
+            text-align: center;
+        }
+        #gameCanvas {
+            background-color: #111;
+            width: 100%;
+            height: 400px;
+            border: 2px solid white;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+            border: 1px solid #000; /* Opcjonalna ramka */
+            overflow: hidden; /* Ukrywa elementy poza kontenerem */
+        }
+
+        #score {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: black;
+            z-index: 10; /* Wyższy z-index, aby był na wierzchu */
+        }
+
+        #astronaut {
+            width: 50px;
+            height: 50px;
+            background-color: #111;
+            position: absolute;
+            z-index: 10;
+            bottom: 0;
+            left: 50px;
+            background-image: url('Astronuata.jpg');
+            background-size: contain;
+        }
+        .game-area {
+    flex: 1; /* Zajmuje pozostałą przestrzeń */
+    background-color: #111; /* Tło obszaru gry */
+    position: relative; /* Umożliwia pozycjonowanie astronauty */
+}
+
+
+
+
+
+        .obstacle {
+            width: 50px;
+            height: 50px;
+            background-color: #111;
+            position: absolute;
+            bottom: 0;
+            z-index: 9;
+            animation: moveObstacle 2s linear infinite;
+            background-image: url('Tytułowe kozackie1.jpg');
+            background-size: contain;
+        }
+        .air-obstacle {
+        position: absolute;
+        width: 50px;
+         height: 50px;
+         z-index: 9;
+        background-color: #111;
+        background-image: url('pazera-flac-to-mp3-converter-1-1.jpg');
+        background-size: contain;
+        object-fit: cover;
+        background-repeat: no-repeat; /* zapobiega powielaniu */
+
+    }
+        #startGameButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>EXO-Haustive Planets</h1>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#home">Strona główna</a></li>
+            <li><a href="#history">Przeszłość</a></li>
+            <li><a href="#present">Teraźniejszość</a></li>
+            <li><a href="#future">Przyszłość</a></li>
+            <li><a href="#INTR">To Ciekawe...</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="home">
+            <h2>EXO-Haustive Planets</h2>
+            <p>Zapraszamy do zapoznania się z fascynującymi egzoplanetami, jest ich ponad 5 000. Kto wie, może któraś przypadnie ci do gustu?</p>
+        </section>
+
+
+        <section id="history">
+            <h2>Przeszłość</h2>
+            <p>Najważniejsze Momenty Odkrywania Egzoplanet</p>
+        </section>
+
+        <section id="history">
+            <div class="image-container">
+                <div>
+                    <img class="zoom-image" src="2 tyt koz.jpg" alt="Egzoplaneta Poltergeist" onclick="toggleZoom(this)">
+                    <h2>PSR B1257+12 B (Poltergeist)</h2>
+                    <p> - W 1992 polski astronom za pomoca pomiaru nierugalarności
+                     <p>    zmian blasku gwiazd zmiennych odkryto planety krążące wokół pulsara  </p>
+                </div>
+                
+                <div class="text-container">
+                    <img class="zoom-image" src="Keppler.jpg" alt="Teleskop Keplera" onclick="toggleZoom(this)">
+                    <h2>Teleskop Keplera</h2>
+                    <p>- Największym osiągnięciem misji Keplera było odkrycie tysięcy nowych egzoplanet, co zwiększyło naszą wiedzę o różnorodności planet poza Układem Słonecznym.</p>
+                </div>
+
+                <div class="text-container">
+                    <img class="zoom-image" src="Tess.jpg" alt="Teleskop TESS" onclick="toggleZoom(this)">
+                    <h2>Teleskop TESS</h2>
+                    <p>- Teleskop TESS odkrył tysiące kandydatów na egzoplanety, w tym planetę TOI-700 d, znajdującą się w strefie zamieszkiwalnej swojej gwiazdy.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="present">
+            <h2>Teraźniejszość</h2>
+            <p>Obecne odkrycia pokazują, jak fascynujący jest świat egzoplanet...</p>
+        </section>
+
+        <section id="present">
+            <div class="image-container">
+                <div>
+                    <img class="zoom-image" src="Kepler 22b.jpg" alt="Kepler 22b.jpg" onclick="toggleZoom(this)">
+                    <h2>Keppler 22 b</h2>
+                    <p> - W 1992 polski astronom za pomoca pomiaru nierugalarności
+                     <p>    zmian blasku gwiazd zmiennych odkryto planety krążące wokół pulsara  </p>
+                </div>
+                
+                <div class="text-container">
+                    <img class="zoom-image" src="Proxima Centauri b.jpg" alt="Proxima Centauri b.jpg" onclick="toggleZoom(this)">
+                    <h2>Proxima Centauri b</h2>
+                    <p>-Największym osiągnięciem misji Keplera było odkrycie tysięcy nowych egzoplanet,
+                    <p> co zwiększyło naszą wiedzę o różnorodności planet poza Układem Słonecznym.</p>
+                </div>
+
+                <div class="text-container">
+                    <img class="zoom-image" src="51 Pegasi b.jpg" alt="51 Pegasi b.jpg" onclick="toggleZoom(this)">
+                    <h2>51 Pegasi b</h2>
+                    <p>-Teleskop TESS odkrył tysiące kandydatów na egzoplanety, w tym planetę TOI-700 d,
+                    <p>   znajdującą się w strefie zamieszkiwalnej swojej gwiazdy.</p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!DOCTYPE html>
+        <html lang="pl">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Gra z Wynikiem</title>
+            <style>
+                #gameCanvas {
+                    position: relative;
+                    width: 100%; /* Szerokość kontenera */
+                    height: 400px; /* Wysokość kontenera */
+                    border: 1px solid #000; /* Opcjonalna ramka */
+                    overflow: hidden; /* Ukrywa elementy poza kontenerem */
+                }
+        
+                .custom-image {
+                    width: 100px; /* Możesz dostosować szerokość */
+                    height: auto; /* Automatyczna wysokość */
+                    object-fit: cover; /* Przycinanie obrazu, aby wypełnił kontener */
+                    position: absolute; /* Umożliwia swobodne pozycjonowanie */
+                    bottom: 0; /* Pozycjonuje obrazek na dole kontenera */
+                    left: 50px; /* Możesz dostosować położenie w poziomie */
+                }
+        
+                #score {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: 24px;
+                    color: rgb(255, 255, 255);
+                    z-index: 11; /* Wyższy z-index, aby był na wierzchu */
+                }
+            </style>
+        </head>
+        <body>
+        
+            <section id="INTR">
+                <h2>To ciekawe...</h2>
+                <p>Spróbuj swoich sił, przeskocz przeszkody jako astronauta!</p>
+            
+                <button id="startGameButton">Rozpocznij grę</button>
+                <div id="score">Wynik: 0</div> <!-- Wyświetlanie wyniku -->
+                <!-- Sekcja gry -->
+                <div id="gameCanvas">
+                    <div id="astronaut"></div>
+                </div>
+            
+                <!-- Komunikat o końcu gry -->
+                <div id="gameOverMessage" style="display: none;">
+                    <h3>Game Over!</h3>
+                    <p>Kliknij przycisk, aby zagrać ponownie.</p>
+                </div>
+            </section>
+            
+            <footer>
+                <p>© 2024 EXO-Haustive Planets</p>
+            </footer>
+            
+            <script>
+                let astronaut = document.getElementById('astronaut');
+    let gameCanvas = document.getElementById('gameCanvas');
+    let gameOverMessage = document.getElementById('gameOverMessage');
+    let jumping = false;
+    let gameStarted = false;
+    let jumpHeight = 300;
+    let gravity = 7;
+    let createObstacleTimeout;
+    let moveIntervals = [];
+    let score = 0; // Zmienna przechowująca wynik
+    let scoreInterval;
+    let scoreDisplay = document.getElementById('score');
+    
+    // Funkcja uruchamiająca grę
+    function startGame() {
+        gameStarted = true;
+        document.getElementById('startGameButton').style.display = 'none';
+        gameOverMessage.style.display = 'none';
+        astronaut.style.bottom = '0px';
+        clearObstacles(); 
+        createObstacle();
+        score = 0; // Resetowanie wyniku
+        scoreDisplay.textContent = `Wynik: ${score}`; // Wyświetlanie wyniku
+        scoreInterval = setInterval(increaseScore, 1000); 
+    }
+    
+    function increaseScore() {
+            score++;
+            scoreDisplay.textContent = `Wynik: ${score}`;
+        }
+    
+    // Skakanie astronauty po wciśnięciu klawisza "spacja"
+    document.addEventListener('keydown', function(event) {
+        if (event.code === 'Space' && !jumping && gameStarted) {
+            jump();
+        }
+    });
+    
+    // Skakanie na urządzeniach mobilnych
+    astronaut.addEventListener('touchstart', function() {
+        if (!jumping && gameStarted) {
+            jump();
+        }
+    });
+    
+    function jump() {
+        jumping = true;
+        let jumpProgress = 0;
+        let jumpInterval = setInterval(function() {
+            if (jumpProgress >= jumpHeight) {
+                clearInterval(jumpInterval);
+                fall();
+            } else {
+                jumpProgress += 5;
+                astronaut.style.bottom = `${jumpProgress}px`;
+            }
+        }, 20);
+    }
+    
+    function fall() {
+        let fallInterval = setInterval(function() {
+            let currentBottom = parseInt(astronaut.style.bottom);
+            if (currentBottom <= 0) {
+                clearInterval(fallInterval);
+                astronaut.style.bottom = '0px';
+                jumping = false;
+            } else {
+                astronaut.style.bottom = `${currentBottom - gravity}px`;
+            }
+        }, 20);
+    }
+    
+    // Generowanie przeszkód
+    function createObstacle() {
+        if (!gameStarted) return;
+    
+        createObstacleTimeout = setTimeout(function() {
+            // Losujemy, czy przeszkoda będzie naziemna, czy powietrzna
+            let obstacle = document.createElement('div');
+            let isAirObstacle = Math.random() < 0.5; // 50% szans na przeszkodę powietrzną
+    
+            if (isAirObstacle) {
+                obstacle.classList.add('air-obstacle');
+                obstacle.style.bottom = `${Math.random() * 150 + 150}px`; // Przeszkody w powietrzu będą między 150px a 300px nad ziemią
+            } else {
+                obstacle.classList.add('obstacle');
+                obstacle.style.bottom = '0px'; // Naziemne przeszkody
+            }
+    
+            obstacle.style.right = '-50px';  // Przeszkoda zaczyna poza ekranem
+            gameCanvas.appendChild(obstacle);
+    
+            // Przemieszczanie przeszkody
+            let moveInterval = setInterval(function() {
+                let obstacleRight = parseInt(window.getComputedStyle(obstacle).right);
+                let astronautBottom = parseInt(window.getComputedStyle(astronaut).bottom);
+                let obstacleWidth = parseInt(window.getComputedStyle(obstacle).width);
+                let obstacleBottom = parseInt(window.getComputedStyle(obstacle).bottom);
+    
+                // Sprawdzenie kolizji
+                if (obstacleRight >= (gameCanvas.offsetWidth - obstacleWidth - 50) && obstacleRight <= (gameCanvas.offsetWidth - 50) && 
+                    ((isAirObstacle && astronautBottom + 100 > obstacleBottom && astronautBottom < obstacleBottom + 50) ||  // Kolizja z powietrzną przeszkodą
+                    (!isAirObstacle && astronautBottom < 50))) {  // Kolizja z naziemną przeszkodą
+                    gameOverMessage.style.display = 'block';
+                    clearInterval(moveInterval);
+                    resetGame();
+                } else if (obstacleRight >= gameCanvas.offsetWidth) {
+                    clearInterval(moveInterval);
+                    gameCanvas.removeChild(obstacle);
+                } else {
+                    obstacle.style.right = `${obstacleRight + 5}px`;
+                }
+            }, 20);
+    
+            moveIntervals.push(moveInterval);
+    
+            if (gameStarted) {
+                createObstacle();
+            }
+        }, Math.random() * 1500 + 500); // Losowe generowanie przeszkód
+    }
+    
+    // Funkcja usuwająca wszystkie przeszkody
+    function clearObstacles() {
+        let obstacles = document.querySelectorAll('.obstacle, .air-obstacle');
+        obstacles.forEach(obstacle => obstacle.remove());
+    }
+    
+    // Funkcja resetowania gry po przegranej
+    function resetGame() {
+        jumping = false;
+        gameStarted = false;
+        clearTimeout(createObstacleTimeout);
+        clearInterval(scoreInterval);
+        moveIntervals.forEach(clearInterval);
+        moveIntervals = [];
+        clearObstacles();
+    
+        document.getElementById('startGameButton').style.display = 'block';
+    }
+    
+    // Nasłuchiwanie kliknięcia na przycisk "Rozpocznij grę"
+    document.getElementById('startGameButton').addEventListener('click', startGame);
+    
+            </script>    
+            </main>
+        
+            <footer>
+                <p>© 2024 EXO-Haustive Planets</p>
+            </footer>
+        
+            <script>
+                function toggleZoom(image) {
+                    if (image.style.transform === "scale(2.5)") {
+                        image.style.transform = "scale(1)";
+                    } else {
+                        image.style.transform = "scale(2.5)";
+                    }
+                }
+            </script>
+        </body>
+        </html>   

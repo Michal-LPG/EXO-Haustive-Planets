@@ -9,6 +9,24 @@
         body {
             margin: 0; /* Usunięcie marginesów dla body */
         }
+        @media (max-width: 600px) {
+    #home {
+        font-size: 24px; /* Mniejsza czcionka na telefonie */
+        padding: 100px; /* Mniejszy padding */
+    }
+    
+    .zoom-image {
+        width: 150px; /* Mniejsze obrazy */
+    }
+    
+    #gameCanvas {
+        height: 300px; /* Mniejszy rozmiar na telefonie */
+    }
+    
+    #score {
+        font-size: 18px; /* Mniejszy tekst na telefonie */
+    }
+}
 
         #home {
             background-image: url('tło.jpg');
